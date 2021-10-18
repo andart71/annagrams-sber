@@ -43,14 +43,35 @@ const paddingLeft = {
 };
 
 
-export const IndexPage = () => {
+export const IndexPage = ({dispatch}: any) => {
+    const onClickGortenz = () => {
+        dispatch({type: 'gortenzia'});
+    }
+    const onClickHriz = () => {
+        dispatch({type: 'hrizantema'});
+    }
+    const onClickAlstro = () => {
+        dispatch({type: 'alstromeria'});
+    }
+    const onClickGvozdika = () => {
+        dispatch({type: 'gvozdika'});
+    }
+    const onClickGipso = () => {
+        dispatch({type: 'gipsafila'});
+    }
+    const onClickEustoma = () => {
+        dispatch({type: 'eustoma'});
+    }
+    const onClickRoza = () => {
+        dispatch({type: 'roza'});
+    }
     return (
         <Container>
             <Row>
                 <Col sizeS={4} sizeM={4} sizeL={8} sizeXL={8}>
                     <Row>
                         <Half>
-                                <StyledCard outlined scaleOnFocus>
+                                <StyledCard outlined scaleOnFocus onClick={onClickGortenz}>
                                     <CardBody>
                                         <Img src="/gortenz.jpeg" />
                                         <CardContent cover>
@@ -62,7 +83,7 @@ export const IndexPage = () => {
                                 </StyledCard>
                         </Half>
                         <Half>
-                                <StyledCard outlined scaleOnFocus>
+                                <StyledCard outlined scaleOnFocus onClick={onClickHriz}>
                                     <CardBody>
                                         <Img src="/hriz.jpeg" />
                                         <CardContent cover>
@@ -74,7 +95,7 @@ export const IndexPage = () => {
                                 </StyledCard>
                         </Half>
                         <Half>
-                            <StyledCard outlined scaleOnFocus>
+                            <StyledCard outlined scaleOnFocus onClick={onClickAlstro}>
                                 <CardBody>
                                     <Img src="/alstro.jpeg" />
                                     <CardContent cover>
@@ -86,7 +107,7 @@ export const IndexPage = () => {
                             </StyledCard>
                         </Half>
                         <Half>
-                            <StyledCard outlined scaleOnFocus>
+                            <StyledCard outlined scaleOnFocus onClick={onClickGvozdika}>
                                 <CardBody>
                                     <Img src="/gvozdi.jpeg" />
                                     <CardContent cover>
@@ -98,7 +119,7 @@ export const IndexPage = () => {
                             </StyledCard>
                         </Half>
                         <Half>
-                            <StyledCard outlined scaleOnFocus>
+                            <StyledCard outlined scaleOnFocus onClick={onClickGipso}>
                                 <CardBody>
                                     <Img src="/gipsa.jpeg" />
                                     <CardContent cover>
@@ -110,7 +131,7 @@ export const IndexPage = () => {
                             </StyledCard>
                         </Half>
                         <Half>
-                            <StyledCard outlined scaleOnFocus>
+                            <StyledCard outlined scaleOnFocus onClick={onClickEustoma}>
                                 <CardBody>
                                     <Img src="/eustoma.jpeg" />
                                     <CardContent cover>
@@ -122,7 +143,7 @@ export const IndexPage = () => {
                             </StyledCard>
                         </Half>
                         <Half>
-                            <StyledCard outlined scaleOnFocus>
+                            <StyledCard outlined scaleOnFocus onClick={onClickRoza}>
                                 <CardBody>
                                     <Img src="/roza.jpeg" />
                                     <CardContent cover>
