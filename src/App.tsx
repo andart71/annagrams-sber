@@ -23,25 +23,25 @@ export const App: FC = memo(() => {
         const route = () => {
             switch (appState.currentState) {
                 case 'gortenzia':
-                    return <GortenziaPage />
+                    return <GortenziaPage dispatch={dispatch} />
                 break;
                 case 'hrizantema':
-                    return <HrizantemaPage />
+                    return <HrizantemaPage dispatch={dispatch} />
                     break;
                 case 'alstromeria':
-                    return <AlstroMeriaPage />
+                    return <AlstroMeriaPage dispatch={dispatch} />
                     break;
                 case 'gvozdika':
-                    return <GvozdikaPage />
+                    return <GvozdikaPage dispatch={dispatch} />
                     break;
                 case 'gipsafila':
-                    return <GipsafilaPage />
+                    return <GipsafilaPage dispatch={dispatch} />
                     break;
                 case 'eustoma':
-                    return <EustomaPage />
+                    return <EustomaPage dispatch={dispatch} />
                     break;
                 case 'roza':
-                    return <RozaPage />
+                    return <RozaPage dispatch={dispatch} />
                     break;
                 case 'index':
                     return <IndexPage dispatch={dispatch} />;
