@@ -9,6 +9,7 @@ import AlstroMeriaPage from "./pages/AlstromeriaPage";
 import GvozdikaPage from "./pages/GvozdikaPage";
 import GipsafilaPage from "./pages/GipsafilaPage";
 import RozaPage from "./pages/RozaPage";
+import EustomaPage from "./pages/EustomaPage";
 
 export const App: FC = memo(() => {
         const [appState, dispatch] = useReducer(reducer, {
@@ -37,10 +38,13 @@ export const App: FC = memo(() => {
                     return <GipsafilaPage />
                     break;
                 case 'eustoma':
-                    return <GipsafilaPage />
+                    return <EustomaPage />
                     break;
                 case 'roza':
                     return <RozaPage />
+                    break;
+                case 'index':
+                    return <IndexPage dispatch={dispatch} />;
                     break;
                 default:
                     return <IndexPage dispatch={dispatch} />;
