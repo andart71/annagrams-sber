@@ -1,31 +1,25 @@
 type State = {
-    currentState: string
+    currentState: string,
+    mainMessage?: string,
+    errors?: boolean,
+    printMessage?: string,
+    guessedWords?: []
 };
 
 type Action =
     | {
-    type: 'index'
+    type: 'index',
+    errors: boolean
 }
     | {
-    type: 'gortenzia'
+    mainMessage: string;
+    type: "MAIN_MESSAGE"
 }
     | {
-    type: 'hrizantema'
-}
-    | {
-    type: 'alstromeria'
-}
-    | {
-    type: 'gvozdika'
-}
-    | {
-    type: 'gipsafila'
-}
-    | {
-    type: 'eustoma'
-}
-    | {
-    type: 'roza'
+    type: 'GO_GAME_PAGE',
+    printMessage: string,
+    errors: boolean,
+    guessedWords: []
 }
 
 export const reducer = (state: State, action: Action) => {
@@ -34,49 +28,23 @@ export const reducer = (state: State, action: Action) => {
         case 'index':
             return {
                 ...state,
-                currentState: 'index'
+                currentState: 'index',
+                errorsNumber: action.errors
             };
-        break;
-        case 'gortenzia':
+        case 'MAIN_MESSAGE':
             return {
                 ...state,
-                currentState: 'gortenzia'
+                currentState: 'index',
+                mainMessage: action.mainMessage
             }
             break;
-        case 'hrizantema':
+        case 'GO_GAME_PAGE':
             return {
                 ...state,
-                currentState: 'hrizantema'
-            }
-            break;
-        case 'alstromeria':
-            return {
-                ...state,
-                currentState: 'alstromeria'
-            }
-            break;
-        case 'gvozdika':
-            return {
-                ...state,
-                currentState: 'gvozdika'
-            }
-            break;
-        case 'gipsafila':
-            return {
-                ...state,
-                currentState: 'gipsafila'
-            }
-            break;
-        case 'eustoma':
-            return {
-                ...state,
-                currentState: 'eustoma'
-            }
-            break;
-        case 'roza':
-            return {
-                ...state,
-                currentState: 'roza'
+                currentState: 'game_page',
+                printMessage: action.printMessage,
+                errorsWord: action.errors,
+                guessedWords: action.guessedWords
             }
             break;
         default:

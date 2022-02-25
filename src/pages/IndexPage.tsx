@@ -1,160 +1,80 @@
+import React, { useState } from 'react';
+import { Container, Row, Col, Card, CardContent, TextBoxBigTitle, TextBoxSubTitle, Button, TextField, isSberBox } from '@sberdevices/plasma-ui'
 import styled from 'styled-components';
-import { detectDevice, isSberPortal } from '@sberdevices/plasma-ui/utils/deviceDetection';
-import { Card, Body1, Body3, Col, Row, CardContent, TextBoxBigTitle, TextBox, CardBody, Container } from '@sberdevices/plasma-ui'
-import Img from './Img';
-const heightMap = {
-    sberPortal: 247,
-    sberBox: 336,
-    mobile: 165,
-};
+import { sendData } from '../assistant';
 
-const StyledCard = styled(Card)`
-    margin-bottom: ${detectDevice() === 'mobile' ? 8 : 32}px;
-    height: ${heightMap[detectDevice()]}px;
+const StyledButton = styled(Button)`
+    max-width: 100%;
+    display: block;
+    margin: 0 auto;
+    float: none;
 `;
 
-const StyledBody1 = styled(Body1)`
-    color: rgba(255, 255, 255, 0.56);
-    margin-top: 8px;
-    margin-bottom: 2px;
-    width: ${isSberPortal() ? '100px' : '100%'};
-    display: ${isSberPortal() ? 'inline-block' : 'block'};
-`;
+export const IndexPage = ({ appState } : any, { dispatch }: any) => {
+    const [isErrors, setError] = useState(false);
+    const [getNumberOfLetters, setNumberOfLetters] = useState<number>(4);
+    const formRef = React.useRef<HTMLFormElement>(null);
+    const onKeyDown = React.useCallback((event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter' && formRef.current) {
+            const formElements = Array.from(formRef.current.elements) as HTMLElement[];
+            const index = Array.from(formElements).indexOf(event.target as HTMLElement);
 
-const StyledBody3 = styled(Body3)`
-    width: ${isSberPortal() ? 'calc(100% - 100px)' : '100%'};
-    display: ${isSberPortal() ? 'inline-block' : 'block'};
-`;
-
-const MarginTop = styled.div`
-    margin-top: 20px;
-`;
-
-const Half: React.FC = ({ children }) => (
-    <Col sizeS={4} sizeM={3} sizeL={4} sizeXL={6}>
-        {children}
-    </Col>
-);
-
-const paddingLeft = {
-    sberPortal: 12,
-    sberBox: 52,
-    mobile: 0,
-};
+            if (index > -1) {
+                setTimeout(() => {
+                    formElements[index + 1].focus();
+                }, 150);
+            }
+        }
+    }, []);
 
 
-export const IndexPage = ({dispatch}: any) => {
-    const onClickGortenz = () => {
-        dispatch({type: 'gortenzia'});
+    const handleSubmit = (t: any) => {
+        t.preventDefault();
+        sendData({action: {action_id: "SET_NUMBER_OF_LETTERS", parameters: { numberOfLetters: getNumberOfLetters}}});
+        //dispatch({ type: 'GO_GAME_PAGE', currentState: 'game_page'});
     }
-    const onClickHriz = () => {
-        dispatch({type: 'hrizantema'});
+
+    const handleChange = (t: any) => {
+        console.log(t.target.value)
+        setNumberOfLetters(t.target.value.replace(/[^+\d]/g, ''));
     }
-    const onClickAlstro = () => {
-        dispatch({type: 'alstromeria'});
-    }
-    const onClickGvozdika = () => {
-        dispatch({type: 'gvozdika'});
-    }
-    const onClickGipso = () => {
-        dispatch({type: 'gipsafila'});
-    }
-    const onClickEustoma = () => {
-        dispatch({type: 'eustoma'});
-    }
-    const onClickRoza = () => {
-        dispatch({type: 'roza'});
-    }
+    console.log(appState.errorsNumber + "errorsnumber");
     return (
         <Container>
             <Row>
-                <Col sizeS={4} sizeM={4} sizeL={8} sizeXL={8}>
-                    <Row>
-                        <Half>
-                                <StyledCard outlined scaleOnFocus onClick={onClickGortenz}>
-                                    <CardBody>
-                                        <Img src="/gortenz.jpeg" />
-                                        <CardContent cover>
-                                            <TextBox>
-                                                <TextBoxBigTitle>Гортензия</TextBoxBigTitle>
-                                            </TextBox>
-                                        </CardContent>
-                                    </CardBody>
-                                </StyledCard>
-                        </Half>
-                        <Half>
-                                <StyledCard outlined scaleOnFocus onClick={onClickHriz}>
-                                    <CardBody>
-                                        <Img src="/hriz.jpeg" />
-                                        <CardContent cover>
-                                            <TextBox>
-                                                <TextBoxBigTitle>Хризантема</TextBoxBigTitle>
-                                            </TextBox>
-                                        </CardContent>
-                                    </CardBody>
-                                </StyledCard>
-                        </Half>
-                        <Half>
-                            <StyledCard outlined scaleOnFocus onClick={onClickAlstro}>
-                                <CardBody>
-                                    <Img src="/alstro.jpeg" />
-                                    <CardContent cover>
-                                        <TextBox>
-                                            <TextBoxBigTitle>Альстромерия</TextBoxBigTitle>
-                                        </TextBox>
-                                    </CardContent>
-                                </CardBody>
-                            </StyledCard>
-                        </Half>
-                        <Half>
-                            <StyledCard outlined scaleOnFocus onClick={onClickGvozdika}>
-                                <CardBody>
-                                    <Img src="/gvozdi.jpeg" />
-                                    <CardContent cover>
-                                        <TextBox>
-                                            <TextBoxBigTitle>Гвоздика</TextBoxBigTitle>
-                                        </TextBox>
-                                    </CardContent>
-                                </CardBody>
-                            </StyledCard>
-                        </Half>
-                        <Half>
-                            <StyledCard outlined scaleOnFocus onClick={onClickGipso}>
-                                <CardBody>
-                                    <Img src="/gipsa.jpeg" />
-                                    <CardContent cover>
-                                        <TextBox>
-                                            <TextBoxBigTitle>Гипсафила</TextBoxBigTitle>
-                                        </TextBox>
-                                    </CardContent>
-                                </CardBody>
-                            </StyledCard>
-                        </Half>
-                        <Half>
-                            <StyledCard outlined scaleOnFocus onClick={onClickEustoma}>
-                                <CardBody>
-                                    <Img src="/eustoma.jpeg" />
-                                    <CardContent cover>
-                                        <TextBox>
-                                            <TextBoxBigTitle>Эустома</TextBoxBigTitle>
-                                        </TextBox>
-                                    </CardContent>
-                                </CardBody>
-                            </StyledCard>
-                        </Half>
-                        <Half>
-                            <StyledCard outlined scaleOnFocus onClick={onClickRoza}>
-                                <CardBody>
-                                    <Img src="/roza.jpeg" />
-                                    <CardContent cover>
-                                        <TextBox>
-                                            <TextBoxBigTitle>Роза кустовая</TextBoxBigTitle>
-                                        </TextBox>
-                                    </CardContent>
-                                </CardBody>
-                            </StyledCard>
-                        </Half>
-                    </Row>
+                <Col type="calc" sizeXL={4} sizeM={4} style={{margin: "0 auto", marginTop: "15px"}}>
+                            <TextBoxSubTitle>{appState.mainMessage}</TextBoxSubTitle>
+                            {isErrors===true ? 'Поле не может быть пустым!' : null}
+                            <form ref={formRef} onSubmit={handleSubmit}>
+                                <Row>
+                                    <Col type="calc" sizeXL={4} sizeM={6} sizeS={4} style={{margin: "0 auto", marginTop: "15px"}}>
+                                        {appState.errorsNumber ? <TextField
+                                            label="Количество букв"
+                                            value={getNumberOfLetters}
+                                            onChange={handleChange}
+                                            name="numberOfLetters"
+                                            onKeyDown={onKeyDown}
+                                            status="error"
+                                            required
+                                        /> : <TextField
+                                            label="Количество букв"
+                                            value={getNumberOfLetters}
+                                            onChange={handleChange}
+                                            name="numberOfLetters"
+                                            onKeyDown={onKeyDown}
+                                            required
+                                        />}
+
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col type="calc" sizeXL={4} sizeM={6} sizeS={4} style={{margin: "0 auto", marginTop: "15px"}}>
+                                        <StyledButton type="submit" size={isSberBox() ? 'm' : 's'} view="primary">
+                                            Отправить
+                                        </StyledButton>
+                                    </Col>
+                                </Row>
+                            </form>
                 </Col>
             </Row>
         </Container>
