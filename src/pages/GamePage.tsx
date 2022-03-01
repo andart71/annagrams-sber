@@ -1,4 +1,4 @@
-import {TextBoxSubTitle, Container, Row, Col, TextField, isSberBox, Button} from "@sberdevices/plasma-ui";
+import {TextBoxSubTitle, Container, Row, Col, TextField, isSberBox, Button, ParagraphText2} from "@sberdevices/plasma-ui";
 import React, { useState } from "react";
 import styled from "styled-components";
 import {sendData} from "../assistant";
@@ -42,16 +42,15 @@ export const GamePage = ({appState}: any) => {
             return guessedWords[i]
         }
     }
-
     console.log(appState, "app state");
     return (
         <Container>
             <Row>
-                <Col type="calc" sizeXL={4} sizeM={4} style={{margin: "0 auto", marginTop: "15px", marginBottom: "15px"}}>
+                <Col type="calc" sizeXL={4} sizeM={2} style={{margin: "0 auto", marginTop: "15px", marginBottom: "15px"}}>
                     <TextBoxSubTitle>{appState.printMessage}</TextBoxSubTitle>
                     <form ref={formRef} onSubmit={handleSubmit}>
                         <Row>
-                            <Col type="calc" sizeXL={4} sizeM={6} sizeS={4} style={{margin: "0 auto", marginTop: "15px"}}>
+                            <Col type="calc" sizeXL={4} sizeM={8} sizeS={4} style={{margin: "0 auto", marginTop: "15px"}}>
                                 {appState.errorsWord ? <TextField
                                     label="Новое слово"
                                     value={getNewWord}
@@ -80,8 +79,15 @@ export const GamePage = ({appState}: any) => {
                         </Row>
                     </form>
                 </Col>
+                <Col sizeS={4}>
+                <Row>
+                <ParagraphText2 style={{marginBottom: '6rem'}}>Слово: {appState.printMessage.match(/«(.+)»/)[1]}</ParagraphText2>
+                    </Row>
+                <Row>
                 Угаданные слова:<br />
                 {appState.guessedWords ? appState.guessedWords.join(', ') : "Нет найденных слов"}
+                </Row>
+                </Col>
             </Row>
         </Container>
     )
