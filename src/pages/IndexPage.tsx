@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, CardContent, TextBoxBigTitle, TextBoxSubTitle, Button, TextField, isSberBox } from '@sberdevices/plasma-ui'
 import styled from 'styled-components';
 import { sendData } from '../assistant';
@@ -10,10 +10,12 @@ const StyledButton = styled(Button)`
     float: none;
 `;
 
-export const IndexPage = ({ appState } : any, { dispatch }: any) => {
+export const IndexPage = ({ appState }: any) => {
     const [isErrors, setError] = useState(false);
+    const [getDisabledButton, setDisabledButton] = useState(false);
     const [getNumberOfLetters, setNumberOfLetters] = useState<number>(4);
     const formRef = React.useRef<HTMLFormElement>(null);
+
     const onKeyDown = React.useCallback((event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter' && formRef.current) {
             const formElements = Array.from(formRef.current.elements) as HTMLElement[];
@@ -32,13 +34,18 @@ export const IndexPage = ({ appState } : any, { dispatch }: any) => {
         t.preventDefault();
         sendData({action: {action_id: "SET_NUMBER_OF_LETTERS", parameters: { numberOfLetters: getNumberOfLetters}}});
         //dispatch({ type: 'GO_GAME_PAGE', currentState: 'game_page'});
+        setDisabledButton(true);
+        setTimeout(() => {
+            setDisabledButton(false)
+        }, 3000);
     }
 
     const handleChange = (t: any) => {
         console.log(t.target.value)
         setNumberOfLetters(t.target.value.replace(/[^+\d]/g, ''));
     }
-    console.log(appState.errorsNumber + "errorsnumber");
+
+
     return (
         <Container>
             <Row>
@@ -69,7 +76,7 @@ export const IndexPage = ({ appState } : any, { dispatch }: any) => {
                                 </Row>
                                 <Row>
                                     <Col type="calc" sizeXL={4} sizeM={6} sizeS={4} style={{margin: "0 auto", marginTop: "15px"}}>
-                                        <StyledButton type="submit" size={isSberBox() ? 'm' : 's'} view="primary">
+                                        <StyledButton disabled={getDisabledButton} type="submit" size={isSberBox() ? 'm' : 's'} view="primary">
                                             Отправить
                                         </StyledButton>
                                     </Col>

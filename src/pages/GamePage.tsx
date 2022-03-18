@@ -12,6 +12,7 @@ const StyledButton = styled(Button)`
 
 
 export const GamePage = ({appState}: any) => {
+    const [getDisabledButton, setDisabledButton] = useState(false);
     const [getNewWord, setNewWord] = useState<string>('');
     const formRef = React.useRef<HTMLFormElement>(null);
     const onKeyDown = React.useCallback((event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -30,6 +31,10 @@ export const GamePage = ({appState}: any) => {
     const handleSubmit = (t: any) => {
         t.preventDefault();
         sendData({action: {action_id: "SET_NEW_WORD", parameters: { newWord: getNewWord}}});
+        setDisabledButton(true);
+        setTimeout(() => {
+            setDisabledButton(false)
+        }, 3000);
     }
 
     const handleChange = (t: any) => {
@@ -72,7 +77,7 @@ export const GamePage = ({appState}: any) => {
                         </Row>
                         <Row>
                             <Col type="calc" sizeXL={4} sizeM={6} sizeS={4} style={{margin: "0 auto", marginTop: "15px"}}>
-                                <StyledButton type="submit" size={isSberBox() ? 'm' : 's'} view="primary">
+                                <StyledButton disabled={getDisabledButton} type="submit" size={isSberBox() ? 'm' : 's'} view="primary">
                                     Отправить
                                 </StyledButton>
                             </Col>
