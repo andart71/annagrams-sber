@@ -26,13 +26,11 @@ export const App: FC = memo(() => {
 
         return (
             <>
-                <Container>
                     <Header
                         logo='/logo.png'
                         title='Игра Анаграммы'
                     />
                     {route()}
-                </Container>
             </>
         );
     }
